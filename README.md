@@ -18,83 +18,17 @@
 
 ---
 
-## Why Sleepwalk
-
-Plenty of apps keep a Mac awake. Close the lid and walk to your car, though,
-and the Mac loses the office Wi-Fi. It stays offline until you open it and
-pick your hotspot by hand, and whatever it was running waits the whole way.
-
-Sleepwalk picks the hotspot for you, as often as the connection drops.
-
 ## How it works
 
 1. **Start a session** from the menu bar, for a set time or until you end it.
 2. **Close the lid.** The Mac stays awake, mutes, darkens and locks.
-3. **Turn on Personal Hotspot** on your iPhone. The Mac joins it.
+3. **Turn on Personal Hotspot** on your iPhone. The Mac joins it, and joins
+   again whenever the connection drops.
 
 Ending the session puts every setting back.
 
-## Made for
-
-- **AI coding agents** such as Claude Code or Codex, left running on the commute
-- **Long builds and test runs** started before you leave the desk
-- **Uploads, downloads and backups** that would otherwise stop at the door
-
-## Features
-
-### Awake with the lid closed
-A session keeps the Mac running with the lid shut, from 5 minutes up to 24
-hours, or indefinitely. The Z in the menu bar fills in while a session runs.
-
-### Joins your hotspot
-While the Mac is offline, Sleepwalk tries to join your hotspot every 5 seconds
-by default, or at any interval from 2 to 60 seconds. The menu shows where it
-stands: *Joining*, *Not in Range* or *Password Rejected*. The password is kept
-in your keychain.
-
-### Stay on Hotspot
-On your way out you pass networks the Mac has joined before, and macOS
-switches to each one. Meanwhile your iPhone stops offering its hotspot a short
-while after the Mac leaves it, so when that Wi-Fi drops, the hotspot is gone
-too.
-
-Stay on Hotspot, on by default, keeps the Mac on your hotspot for the whole
-session. Turn it off to let the Mac use Wi-Fi it knows; Sleepwalk goes back to
-the hotspot when that Wi-Fi drops, as long as your iPhone still offers it.
-
-### Mute, darken, lock
-When the lid closes, audio mutes, the display goes dark and the screen locks.
-Each is a setting of its own.
-
-### Low battery and heat
-A session ends at 10% battery, or at the level you set. It also ends when
-macOS reports the Mac is hot; you choose Warm, Hot or Critical.
-
-### Session history
-Each session has a timeline of lid changes, networks joined and time offline.
-Its summary gives the share of time on the hotspot, on other Wi-Fi and
-offline, the number of drops and the longest one.
-
-### Settings restored
-However a session ends, it puts back what it changed, a crash included. If the
-Mac restarts mid-session, Sleepwalk restores the settings the next time it
-opens.
-
-### Shortcut, Siri, command line and agents
-- **⌃⌥⌘W** starts or ends a session from any app.
-- **Shortcuts, Spotlight and Siri** get four actions: Start Sleepwalk Session,
-  End Sleepwalk Session, Get Sleepwalk Status and Test Hotspot Connection.
-- **Command line**, after Settings → General → Install:
-
-  ```
-  sleepwalk start 2h
-  sleepwalk status
-  sleepwalk history
-  sleepwalk set stay-on-hotspot on
-  ```
-- **AI agents** run the same commands. Tell Claude Code or Codex to start a
-  session before a long task and end it when the task is done, or put that
-  in a skill so it happens every time.
+People use it for AI coding agents left running on the commute, for long
+builds and test runs, and for uploads that would otherwise stop at the door.
 
 ## Setup
 
@@ -106,25 +40,104 @@ opens.
 
 Sleepwalk updates itself.
 
+## AI apps
+
+A connected AI app starts a session before a long task and ends it when the
+task is done.
+
+**Claude, Cursor, Visual Studio Code:** open **Settings → AI Apps** and click
+**Connect**. The app asks you to confirm.
+
+**Claude Code**
+
+```
+claude mcp add --scope user sleepwalk -- /Applications/Sleepwalk.app/Contents/MacOS/Sleepwalk mcp
+```
+
+**Codex**
+
+```
+codex mcp add sleepwalk -- /Applications/Sleepwalk.app/Contents/MacOS/Sleepwalk mcp
+```
+
+An AI app can start and end sessions, read the status and history, and change
+how a session behaves. The safeguards, the screen lock and the hotspot stay
+yours, and the hotspot password never passes through an AI app.
+
+<details>
+<summary>Other apps</summary>
+
+Sleepwalk is an [MCP](https://modelcontextprotocol.io) server. In the app’s
+MCP settings:
+
+```json
+{
+  "mcpServers": {
+    "sleepwalk": { "command": "/Applications/Sleepwalk.app/Contents/MacOS/Sleepwalk", "args": ["mcp"] }
+  }
+}
+```
+</details>
+
+<details>
+<summary>Let an AI agent install Sleepwalk</summary>
+
+Paste this into Claude Code, Codex or any agent with a terminal, or
+[open it in Cursor](https://cursor.com/link/prompt?text=Install%20Sleepwalk%20%28https%3A%2F%2Fgithub.com%2Fneothic%2Fsleepwalk%29%20on%20this%20Mac%20and%20connect%20yourself%20to%20it.%0A%0A1.%20Download%20the%20.zip%20from%20the%20latest%20release%20at%20https%3A%2F%2Fgithub.com%2Fneothic%2Fsleepwalk%2Freleases%2Flatest%20and%20unpack%20it%20with%20%60ditto%20-x%20-k%60.%0A2.%20Check%20it%20before%20installing%3A%20%60spctl%20--assess%20--type%20execute%20-v%20Sleepwalk.app%60%20must%20report%20%22Notarized%20Developer%20ID%22%2C%20and%20%60codesign%20-dv%20Sleepwalk.app%60%20must%20show%20TeamIdentifier%3D2H5DY5334C.%20Stop%20if%20either%20differs.%0A3.%20Move%20Sleepwalk.app%20to%20%2FApplications%20and%20open%20it.%0A4.%20Add%20its%20MCP%20server%20to%20your%20own%20configuration%2C%20for%20every%20project.%20The%20server%20command%20is%20%60%2FApplications%2FSleepwalk.app%2FContents%2FMacOS%2FSleepwalk%20mcp%60.%0A5.%20Tell%20me%20to%20finish%20in%20Sleepwalk%27s%20Settings%3A%20the%20hotspot%20name%20and%20password%20under%20Hotspot%2C%20and%20Grant%20under%20General.%20Those%20two%20are%20mine%20to%20do.).
+
+```text
+Install Sleepwalk (https://github.com/neothic/sleepwalk) on this Mac and connect yourself to it.
+
+1. Download the .zip from the latest release at https://github.com/neothic/sleepwalk/releases/latest and unpack it with `ditto -x -k`.
+2. Check it before installing: `spctl --assess --type execute -v Sleepwalk.app` must report "Notarized Developer ID", and `codesign -dv Sleepwalk.app` must show TeamIdentifier=2H5DY5334C. Stop if either differs.
+3. Move Sleepwalk.app to /Applications and open it.
+4. Add its MCP server to your own configuration, for every project. The server command is `/Applications/Sleepwalk.app/Contents/MacOS/Sleepwalk mcp`.
+5. Tell me to finish in Sleepwalk's Settings: the hotspot name and password under Hotspot, and Grant under General. Those two are mine to do.
+```
+</details>
+
+## Features
+
+- **Awake with the lid closed**, from 5 minutes to 24 hours, or until you end
+  the session.
+- **Hotspot.** While the Mac is offline, Sleepwalk tries to join your hotspot
+  every 5 seconds. The password is kept in your keychain.
+- **Stay on Hotspot.** On the way out you pass Wi-Fi the Mac knows, and macOS
+  hops onto each one. Stay on Hotspot keeps the Mac on your hotspot for the
+  whole session.
+- **Low Power Mode** during a session, so the Mac stays cooler in a bag.
+- **Mute, darken, lock** when the lid closes. Each is a setting of its own.
+- **Low battery and heat.** A session ends at 10% battery and when macOS
+  reports the Mac hot. Both levels are yours to set.
+- **Session history.** Each session has a timeline of lid changes, networks
+  joined and time offline.
+- **Settings restored.** However a session ends, it puts back what it changed.
+- **Shortcut, Siri, command line.** ⌃⌥⌘W starts or ends a session from any
+  app. Shortcuts, Spotlight and Siri have the same actions, and so does
+  `sleepwalk` in Terminal, after **Settings → General → Install**.
+
 ## Questions
 
 **Is it safe to keep a closed Mac in a bag?**
-It can get hot. Sleepwalk ends a session when macOS reports high temperature,
-but it can’t prevent overheating, so leave some airflow around your Mac.
+It can get hot. Sleepwalk runs the Mac in Low Power Mode and ends the session
+when macOS reports heat, but it can’t prevent overheating, so leave some
+airflow around your Mac.
 
 **Why does it ask for an administrator password?**
-Keeping a Mac awake with the lid closed is a system setting, and changing it
-needs an administrator. Sleepwalk asks once, when you click Grant.
+Keeping a Mac awake with the lid closed and switching Low Power Mode are
+system settings, and changing them needs an administrator. Sleepwalk asks
+once, when you click Grant.
 
 **How do I remove it?**
 Settings → General → Uninstall removes the app and everything it keeps on
 your Mac.
 
----
+## Feedback
 
-<p align="center">
-  <a href="https://github.com/neothic/sleepwalk/releases/latest"><b>Download Sleepwalk for Mac</b></a>
-</p>
+Found a bug or missing something?
+[Open an issue](https://github.com/neothic/sleepwalk/issues/new).
+
+---
 
 <p align="center">
   <sub>This repository holds releases only. Use of Sleepwalk is subject to the <a href="LICENSE">licence</a>.<br>© <a href="https://neothic.com">Neothic d.o.o.</a></sub>
