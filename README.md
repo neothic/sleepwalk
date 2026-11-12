@@ -12,11 +12,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/neothic/sleepwalk/releases/latest"><b>Download for Mac</b></a><br>
+  <a href="https://github.com/neothic/sleepwalk/releases/latest"><img src=".github/download.svg" width="220" height="48" alt="Download for Mac"></a><br>
   <sub>Free · macOS 14 or later</sub>
 </p>
-
----
 
 ## How it works
 
@@ -40,50 +38,36 @@ Useful for AI coding agents on the commute, long builds and test runs, and uploa
 
 ## Setup
 
-### With AI
-
-Paste this into Claude Code or Codex, or open it in [Cursor](https://cursor.com/link/prompt?text=Install%20Sleepwalk%20%28https%3A%2F%2Fgithub.com%2Fneothic%2Fsleepwalk%29%20on%20this%20Mac%2C%20connect%20yourself%20to%20it%20and%20set%20it%20up.%0A%0A1.%20Download%20the%20.zip%20from%20the%20latest%20release%20at%20https%3A%2F%2Fgithub.com%2Fneothic%2Fsleepwalk%2Freleases%2Flatest%20and%20unpack%20it%20with%20%60ditto%20-x%20-k%60.%0A2.%20Check%20it%20before%20installing%3A%20%60spctl%20--assess%20--type%20execute%20-v%20Sleepwalk.app%60%20must%20report%20%22Notarized%20Developer%20ID%22%2C%20and%20%60codesign%20-dv%20Sleepwalk.app%60%20must%20show%20TeamIdentifier%3D2H5DY5334C.%20Stop%20if%20either%20differs.%0A3.%20Move%20Sleepwalk.app%20to%20%2FApplications%20and%20open%20it.%0A4.%20Add%20its%20MCP%20server%20to%20your%20own%20configuration%2C%20for%20every%20project.%20The%20server%20command%20is%20%60%2FApplications%2FSleepwalk.app%2FContents%2FMacOS%2FSleepwalk%20mcp%60.%0A5.%20Ask%20me%20for%20my%20iPhone%20hotspot%27s%20name%20and%20password%2C%20and%20set%20them%20with%20that%20same%20command%3A%20%60set%20hotspot%20%3Cname%3E%60%20and%20%60set%20hotspot-password%20%3Cpassword%3E%60.%20iPhone%20hotspot%20names%20use%20%E2%80%99%2C%20not%20%27.%0A6.%20Run%20%60grant-permission%60%20and%20tell%20me%20macOS%20will%20ask%20for%20my%20Mac%20password.%0A7.%20Run%20%60status%60%20and%20tell%20me%20if%20anything%20is%20left.).
-
-```text
-Install Sleepwalk (https://github.com/neothic/sleepwalk) on this Mac, connect yourself to it and set it up.
-
-1. Download the .zip from the latest release at https://github.com/neothic/sleepwalk/releases/latest and unpack it with `ditto -x -k`.
-2. Check it before installing: `spctl --assess --type execute -v Sleepwalk.app` must report "Notarized Developer ID", and `codesign -dv Sleepwalk.app` must show TeamIdentifier=2H5DY5334C. Stop if either differs.
-3. Move Sleepwalk.app to /Applications and open it.
-4. Add its MCP server to your own configuration, for every project. The server command is `/Applications/Sleepwalk.app/Contents/MacOS/Sleepwalk mcp`.
-5. Ask me for my iPhone hotspot's name and password, and set them with that same command: `set hotspot <name>` and `set hotspot-password <password>`. iPhone hotspot names use ’, not '.
-6. Run `grant-permission` and tell me macOS will ask for my Mac password.
-7. Run `status` and tell me if anything is left.
-```
-
 ### Manual
 
 1. [Download Sleepwalk](https://github.com/neothic/sleepwalk/releases/latest), move it to Applications and open it.
-2. In **Settings → Hotspot**, enter the hotspot name and password.
-3. In **Settings → General**, click **Grant**.
+2. In **Settings → General**, click **Grant**.
+3. In **Settings → Hotspot**, enter the hotspot name and password.
+
+### With an AI agent
+
+Also connects the agent to Sleepwalk. Paste this into Claude Code or Codex; it does not work in a normal chat.
+
+```text
+Install and set up Sleepwalk (https://github.com/neothic/sleepwalk) on this Mac. Run the commands yourself and keep every reply to one or two lines. If you have no shell on this Mac (`spctl` is missing), stop and tell me to use Claude Code or Codex. You will run an app you just downloaded: if that needs my approval, ask me once before step 3.
+
+1. Download the .zip from https://github.com/neothic/sleepwalk/releases/latest and unpack it with `ditto -x -k`.
+2. `spctl --assess --type execute -v Sleepwalk.app` must report "Notarized Developer ID" and `codesign -dv Sleepwalk.app` must show TeamIdentifier=2H5DY5334C. Stop if either differs.
+3. Move Sleepwalk.app to /Applications and open it.
+4. Add `/Applications/Sleepwalk.app/Contents/MacOS/Sleepwalk mcp` as an MCP server to your own configuration, for every project.
+5. Ask me one thing: the name of my iPhone's hotspot. Run `/Applications/Sleepwalk.app/Contents/MacOS/Sleepwalk set hotspot <name>`, writing ’ for any apostrophe.
+6. Run `/Applications/Sleepwalk.app/Contents/MacOS/Sleepwalk grant-permission`; macOS asks me for my Mac password.
+7. Run `/Applications/Sleepwalk.app/Contents/MacOS/Sleepwalk status`. When it says "Permission: granted", finish with one line: enter the hotspot password in Sleepwalk's Settings → Hotspot.
+```
 
 ## AI connector
 
 Sleepwalk is an MCP server, so an AI app can start and end sessions itself.
 
-Connect Claude, Cursor or Visual Studio Code in **Settings → AI Apps**.
+Connect Claude, Codex, Cursor or Visual Studio Code in **Settings → AI Apps**.
 
 <details>
-<summary>Claude Code, Codex and other apps</summary>
-
-**Claude Code**
-
-```
-claude mcp add --scope user sleepwalk -- /Applications/Sleepwalk.app/Contents/MacOS/Sleepwalk mcp
-```
-
-**Codex**
-
-```
-codex mcp add sleepwalk -- /Applications/Sleepwalk.app/Contents/MacOS/Sleepwalk mcp
-```
-
-**Any other app**
+<summary>Any other app</summary>
 
 ```json
 {
@@ -112,8 +96,6 @@ Settings → General → Uninstall.
 
 Found a bug or missing something?
 [Open an issue](https://github.com/neothic/sleepwalk/issues/new).
-
----
 
 <p align="center">
   <sub>This repository holds releases only. Use of Sleepwalk is subject to the <a href="LICENSE">licence</a>.<br>© <a href="https://neothic.com">Neothic d.o.o.</a></sub>
