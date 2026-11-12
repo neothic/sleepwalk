@@ -16,6 +16,10 @@
   <sub>Free · macOS 14 or later</sub>
 </p>
 
+<p align="center">
+  <img src=".github/menu.png" width="341" alt="Sleepwalk’s menu during a session">
+</p>
+
 ## How it works
 
 1. **Start a session** from the menu bar.
