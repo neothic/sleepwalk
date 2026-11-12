@@ -26,6 +26,18 @@
 
 Useful for AI coding agents on the commute, long builds and test runs, and uploads.
 
+## Features
+
+- Awake with the lid closed
+- Reconnects to your iPhone’s hotspot
+- Stays on the hotspot instead of other Wi-Fi
+- Remote desktop and screen recording with the lid closed
+- Mute, dim and lock on lid close
+- Low Power Mode with the lid closed
+- Session end on low battery or heat
+- Session history
+- Keyboard shortcut, Siri, Spotlight and command line
+
 ## Setup
 
 ### With AI
@@ -81,23 +93,6 @@ codex mcp add sleepwalk -- /Applications/Sleepwalk.app/Contents/MacOS/Sleepwalk 
 }
 ```
 </details>
-
-## Features
-
-- Awake with the lid closed
-- Reconnects to your iPhone’s hotspot
-- Remote desktop and screen recording with the lid closed
-- Mute, dim and lock on lid close
-- Session end on low battery or heat
-- Session history
-- Keyboard shortcut, Siri, Spotlight and command line
-
-## Options
-
-- Stay on the hotspot instead of other Wi-Fi
-- Low Power Mode with the lid closed
-- Mute and lock
-- Battery level and heat that end a session
 
 ## Questions
 
