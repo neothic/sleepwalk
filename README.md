@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <img src=".github/screenshot.png" width="816" alt="A session’s history: 94% on the hotspot, two drops">
+  <img src=".github/screenshot.png" width="832" alt="A session’s history: 94% on the hotspot, two drops">
 </p>
 
 ## How it works
