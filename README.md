@@ -16,6 +16,10 @@
   <sub>Free · macOS 14 or later</sub>
 </p>
 
+<p align="center">
+  <img src=".github/screenshot.png" width="816" alt="A session’s history: 94% on the hotspot, two drops">
+</p>
+
 ## How it works
 
 1. **Start a session** from the menu bar.
